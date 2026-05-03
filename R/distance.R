@@ -188,7 +188,7 @@ impute_query_exp_value <- function(data_query) {
         interp_data <- data.table::data.table(
           gene_query = gene,
           timepoint_query = timepoint_range_seq,
-          exp_query = approxfun(data$timepoint_reg, data$exp_query)(timepoint_range_seq)
+          exp_query = stats::approxfun(data$timepoint_reg, data$exp_query)(timepoint_range_seq)
         )
 
         return(interp_data)
