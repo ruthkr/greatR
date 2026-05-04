@@ -1,6 +1,7 @@
 ^greatR\.Rproj$
 ^\.Rproj\.user$
 ^dev$
+^dev/
 ^README\.Rmd$
 ^\.github$
 ^_pkgdown\.yml$

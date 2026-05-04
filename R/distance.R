@@ -76,17 +76,6 @@ calculate_distance <- function(results, type = c("registered", "all"), genes_lis
     data_query[, .(gene_query, timepoint_query, exp_query)]
   )
 
-  # Rename timepoints
-  timepoint_cj_result$timepoint_ref <- gsub("^ref_", paste0(reference, " "), timepoint_cj_result$timepoint_ref)
-  timepoint_cj_result$timepoint_ref <- gsub("^query_", paste0(query, " "), timepoint_cj_result$timepoint_ref)
-  timepoint_cj_result$timepoint_query <- gsub("^ref_", paste0(reference, " "), timepoint_cj_result$timepoint_query)
-  timepoint_cj_result$timepoint_query <- gsub("^query_", paste0(query, " "), timepoint_cj_result$timepoint_query)
-
-  timepoint_cj_original$timepoint_ref <- gsub("^ref_", paste0(reference, " "), timepoint_cj_original$timepoint_ref)
-  timepoint_cj_original$timepoint_ref <- gsub("^query_", paste0(query, " "), timepoint_cj_original$timepoint_ref)
-  timepoint_cj_original$timepoint_query <- gsub("^ref_", paste0(reference, " "), timepoint_cj_original$timepoint_query)
-  timepoint_cj_original$timepoint_query <- gsub("^query_", paste0(query, " "), timepoint_cj_original$timepoint_query)
-
   # Calculate mean square distances
   dist_result <- timepoint_cj_result[, .(distance = mean((exp_ref - exp_query)^2)), by = .(timepoint_ref, timepoint_query)][timepoint_query >= 0]
   dist_original <- timepoint_cj_original[, .(distance = mean((exp_ref - exp_query)^2)), by = .(timepoint_ref, timepoint_query)][timepoint_query >= 0]
@@ -180,18 +169,18 @@ impute_query_exp_value <- function(data_query) {
   imputed_list <- lapply(
     genes,
     function(gene) {
-        data <- data_query[data_query$gene_query == gene]
+      data <- data_query[data_query$gene_query == gene]
 
-        timepoint_range <- data[, .(min_t = ceiling(min(timepoint_reg)), max_t = floor(max(timepoint_reg)))]
-        timepoint_range_seq <- timepoint_range$min_t:timepoint_range$max_t
+      timepoint_range <- data[, .(min_t = ceiling(min(timepoint_reg)), max_t = floor(max(timepoint_reg)))]
+      timepoint_range_seq <- timepoint_range$min_t:timepoint_range$max_t
 
-        interp_data <- data.table::data.table(
-          gene_query = gene,
-          timepoint_query = timepoint_range_seq,
-          exp_query = approxfun(data$timepoint_reg, data$exp_query)(timepoint_range_seq)
-        )
+      interp_data <- data.table::data.table(
+        gene_query = gene,
+        timepoint_query = timepoint_range_seq,
+        exp_query = stats::approxfun(data$timepoint_reg, data$exp_query)(timepoint_range_seq)
+      )
 
-        return(interp_data)
+      return(interp_data)
     }
   )
 
@@ -216,12 +205,13 @@ get_timepoint_comb_data <- function(data_ref, data_query, cross_join_all = FALSE
   exp_ref <- NULL
   exp_query <- NULL
 
-  # Rename timepoints
-  data_ref <- data_ref[, timepoint_ref := paste0("ref_", timepoint_ref)]
-  data_query <- data_query[, timepoint_query := paste0("query_", timepoint_query)]
-
   # Parse data
   if (cross_join_all) {
+    # Prefix time points only when mixing ref/query in both axes (four quadrants)
+    # otherwise keep numeric time points like the published pipeline and tests
+    data_ref <- data_ref[, timepoint_ref := paste0("ref_", timepoint_ref)]
+    data_query <- data_query[, timepoint_query := paste0("query_", timepoint_query)]
+
     data_ref_parsed <- rbind(
       data_ref[, .(gene_ref, timepoint_ref, exp_ref)],
       data_query[, .(gene_ref = gene_query, timepoint_ref = timepoint_query, exp_ref = exp_query)]

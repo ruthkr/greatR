@@ -1,4 +1,21 @@
-# greatR 2.0.0.9000
+# greatR 2.1.0
+
+## Changes
+
+* Aligned `num_spline_params` used in `compare_H1_and_H2()` BIC calculation with the spline model (5 parameters per curve).
+* `calculate_distance()` now imputes query expression on the registered time grid with `impute_query_exp_value()` (linear interpolation via `stats::approxfun()`); spline-based imputation remains available as `impute_query_exp_value_from_spline()` for comparison workflows.
+* `get_timepoint_comb_data()` gains optional `cross_join_all` to support four-quadrant time-point combinations (reference-reference, query-query, etc.); `ref_` / `query_` prefixes are only applied in that mode so the default path keeps numeric time points.
+* `calculate_distance()` and `plot.dist_greatR()` now handle numeric and label-formatted time-point tables more robustly (pre-aggregation relabelling removed from distance calculation; plot-side label stripping is conditional).
+
+## Tooling & Documentation
+
+* Added maintainer script `dev/scripts/rebuild_brapa_registration_rds.R` (plus notes under `dev/`) to regenerate `inst/extdata/brapa_arabidopsis_registration.rds` after registration changes.
+* `dev/full_pipeline_example.Rmd`: runnable full pipeline (CSV → `register()` → summaries, curves, distances) for smoke-testing from a source checkout.
+* Added `here` under `Suggests` for the rebuild script; updated `Config/roxygen2/version` for current {roxygen2}.
+
+## Tests
+
+* Updated unit test expectations for `BIC_diff` and `calculate_distance()` to match current outputs.
 
 # greatR 2.0.0
 
