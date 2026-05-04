@@ -6,18 +6,17 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <title>Input data requirements • greatR</title>
-<!-- favicons --><link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
-<link rel="icon" type="image/png" sizes="32x32" href="../favicon-32x32.png">
-<link rel="apple-touch-icon" type="image/png" sizes="180x180" href="../apple-touch-icon.png">
-<link rel="apple-touch-icon" type="image/png" sizes="120x120" href="../apple-touch-icon-120x120.png">
-<link rel="apple-touch-icon" type="image/png" sizes="76x76" href="../apple-touch-icon-76x76.png">
-<link rel="apple-touch-icon" type="image/png" sizes="60x60" href="../apple-touch-icon-60x60.png">
+<!-- favicons --><link rel="icon" type="image/png" sizes="96x96" href="../favicon-96x96.png">
+<link rel="icon" type="”image/svg+xml”" href="../favicon.svg">
+<link rel="apple-touch-icon" sizes="180x180" href="../apple-touch-icon.png">
+<link rel="icon" sizes="any" href="../favicon.ico">
+<link rel="manifest" href="../site.webmanifest">
 <script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link href="../deps/bootstrap-5.3.1/bootstrap.min.css" rel="stylesheet">
-<script src="../deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><link href="../deps/Lato-0.4.9/font.css" rel="stylesheet">
-<link href="../deps/Fira_Code-0.4.9/font.css" rel="stylesheet">
-<link href="../deps/font-awesome-6.4.2/css/all.min.css" rel="stylesheet">
-<link href="../deps/font-awesome-6.4.2/css/v4-shims.min.css" rel="stylesheet">
+<script src="../deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><link href="../deps/Lato-0.4.10/font.css" rel="stylesheet">
+<link href="../deps/Fira_Code-0.4.10/font.css" rel="stylesheet">
+<link href="../deps/font-awesome-6.5.2/css/all.min.css" rel="stylesheet">
+<link href="../deps/font-awesome-6.5.2/css/v4-shims.min.css" rel="stylesheet">
 <script src="../deps/headroom-0.11.0/headroom.min.js"></script><script src="../deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="../deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="../deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="../deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="../deps/search-1.0.0/fuse.min.js"></script><script src="../deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="../pkgdown.js"></script><link href="../extra.css" rel="stylesheet">
 <meta property="og:title" content="Input data requirements">
 </head>
@@ -29,7 +28,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">greatR</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">2.0.0.9000</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">2.1.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -82,7 +81,7 @@
     
 <p>The input data required for <code>greatR</code> can be either a data
 frame, a list of data frames, or a list of vectors, as shown below:</p>
-<p><img src="figures/input_diagram.png" width="75%" style="display: block; margin: auto;"></p>
+<p><img src="figures/input_diagram.png" class="r-plt" alt="" width="75%" style="display: block; margin: auto;"></p>
 <div class="section level2">
 <h2 id="a-single-data-frame-input">A single data frame input<a class="anchor" aria-label="anchor" href="#a-single-data-frame-input"></a>
 </h2>
@@ -90,7 +89,7 @@ frame, a list of data frames, or a list of vectors, as shown below:</p>
 contain gene expression time-course data with all replicates. The
 illustrative diagram below shows the required structure of the
 <code>input</code>.</p>
-<p><img src="figures/input_table.png" width="75%" style="display: block; margin: auto;"></p>
+<p><img src="figures/input_table.png" class="r-plt" alt="" width="75%" style="display: block; margin: auto;"></p>
 <p>This data frame must contain <strong>reference</strong> and
 <strong>query</strong> expression data, and the following five
 columns:</p>
@@ -163,16 +162,16 @@ frames. As shown in the illustrative diagram below, the list must
 contain both <strong>reference</strong> and <strong>query</strong> data
 frames with the columns as required in the single data frame input (see
 previous section).</p>
-<p><img src="figures/input_list_tables.png" width="85%" style="display: block; margin: auto;"></p>
+<p><img src="figures/input_list_tables.png" class="r-plt" alt="" width="85%" style="display: block; margin: auto;"></p>
 <p>The example below shows how the <code>input</code> list of data
 frames should look like:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Load data frames from the sample data</span></span>
 <span><span class="va">brapa_ref_data</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata/brapa_SOC1_data.csv"</span>, package <span class="op">=</span> <span class="st">"greatR"</span><span class="op">)</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu">data.table</span><span class="fu">::</span><span class="fu"><a href="https://rdatatable.gitlab.io/data.table/reference/fread.html" class="external-link">fread</a></span><span class="op">(</span><span class="op">)</span></span>
+<span>  <span class="fu">data.table</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/data.table/man/fread.html" class="external-link">fread</a></span><span class="op">(</span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">ara_query_data</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata/arabidopsis_SOC1_data.csv"</span>, package <span class="op">=</span> <span class="st">"greatR"</span><span class="op">)</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu">data.table</span><span class="fu">::</span><span class="fu"><a href="https://rdatatable.gitlab.io/data.table/reference/fread.html" class="external-link">fread</a></span><span class="op">(</span><span class="op">)</span></span>
+<span>  <span class="fu">data.table</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/data.table/man/fread.html" class="external-link">fread</a></span><span class="op">(</span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">list_df</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span>
 <span>  reference <span class="op">=</span> <span class="va">brapa_ref_data</span>,</span>
@@ -209,7 +208,7 @@ element will not effect the registration process.</p>
 <p>As an alternative of a list of data frame as input data, as shown
 above, users can also have a list of numerical vectors as their input.
 The illustrative diagram below shows how the input should look like:</p>
-<p><img src="figures/input_list_vectors.png" width="38%" style="display: block; margin: auto;"></p>
+<p><img src="figures/input_list_vectors.png" class="r-plt" alt="" width="38%" style="display: block; margin: auto;"></p>
 <p>The example below shows how the <code>input</code> list of vectors
 can be defined as an input:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
@@ -244,7 +243,7 @@ data &gt; Using other inputs</a> article).</p>
 </div>
 
 <div class="pkgdown-footer-right">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.0.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.2.0.</p>
 </div>
 
     </footer>
