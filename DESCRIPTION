@@ -1,6 +1,6 @@
 Package: greatR
 Title: Gene Registration from Expression and Time-Courses in R
-Version: 2.0.0.9000
+Version: 2.1.0
 Authors@R:
     c(person(given = "Ruth",
            family = "Kristianingsih",
@@ -36,5 +36,5 @@ VignetteBuilder:
 Encoding: UTF-8
 LazyData: true
 Roxygen: list(markdown = TRUE)
-RoxygenNote: 7.3.1
 Config/testthat/edition: 3
+Config/roxygen2/version: 8.0.0
