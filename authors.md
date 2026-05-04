@@ -8,7 +8,7 @@
 ## Citation
 
 Source:
-[`DESCRIPTION`](https://github.com/ruthkr/greatR/blob/master/DESCRIPTION)
+[`DESCRIPTION`](https://github.com/ruthkr/greatR/blob/v2.1.0/DESCRIPTION)
 
 Kristianingsih R (2026). *greatR: Gene Registration from Expression and
 Time-Courses in R*. R package version 2.1.0,

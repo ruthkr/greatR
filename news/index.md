@@ -2,6 +2,8 @@
 
 ## greatR 2.1.0
 
+CRAN release: 2026-05-04
+
 ### Changes
 
 - Aligned `num_spline_params` used in `compare_H1_and_H2()` BIC
