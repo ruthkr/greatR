@@ -1,0 +1,64 @@
+---
+title: "greatR — full pipeline example"
+output: html_document
+---
+
+This document runs the same logical steps as the vignettes (**read sample data → `register()` → summaries and plots**), but without relying on a precomputed `readRDS()` registration object. Use it to smoke-test the package after changes.
+
+```{r setup, message=FALSE}
+# From a package checkout (this repo), load the in-development sources.
+# From an installed package only, `library(greatR)` is enough.
+if (file.exists("R/distance.R") && requireNamespace("pkgload", quietly = TRUE)) {
+  pkgload::load_all(quiet = TRUE)
+}
+library(greatR)
+library(data.table)
+```
+
+## Read data
+
+```{r read}
+path_csv <- system.file("extdata/brapa_arabidopsis_data.csv", package = "greatR")
+stopifnot(path_csv != "")
+b_rapa_data <- fread(path_csv)
+head(b_rapa_data)
+```
+
+## Register
+
+Same call as `vignettes/register-data.Rmd`, except optimisation is limited here so this document knits in reasonable time. For publication-quality optimisation, omit `optimisation_config` (defaults are higher).
+
+```{r register, message=FALSE, warning=FALSE}
+registration_results <- register(
+  b_rapa_data,
+  reference = "Ro18",
+  query = "Col0",
+  scaling_method = "z-score",
+  optimisation_config = list(num_iterations = 30, num_fun_evals = 30)
+)
+
+registration_results$model_comparison
+```
+
+## Summarise and plot registration
+
+```{r summary-plot, fig.height=4, fig.width=4.5}
+reg_summary <- summary(registration_results)
+reg_summary$summary
+plot(reg_summary, type = "registered", scatterplot_size = c(4, 3.5))
+```
+
+```{r plot-curves, fig.height=8, fig.width=7, warning=FALSE}
+plot(registration_results, ncol = 2)
+```
+
+## Distances and heatmaps
+
+```{r distance, message=FALSE}
+sample_distance <- calculate_distance(registration_results)
+```
+
+```{r plot-dist, fig.height=4, fig.width=7, warning=FALSE}
+plot(sample_distance, type = "original")
+plot(sample_distance, type = "result", match_timepoints = TRUE)
+```
